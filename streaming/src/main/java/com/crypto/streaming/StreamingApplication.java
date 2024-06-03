@@ -1,5 +1,6 @@
 package com.crypto.streaming;
 
+import com.crypto.streaming.exchange.ByBit;
 import com.crypto.streaming.exchange.UPBit;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,8 +14,9 @@ public class StreamingApplication {
 	}
 
 	@Bean
-	public CommandLineRunner run(UPBit upBit) {
+	public CommandLineRunner run(UPBit upBit, ByBit byBit) {
 		return args -> {
+			byBit.start();
 			upBit.start();
 		};
 	}

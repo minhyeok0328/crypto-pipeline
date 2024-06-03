@@ -1,16 +1,14 @@
-package com.crypto.streaming.websocket;
+package com.crypto.streaming.config;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.net.URI;
+import java.util.Map;
 
-@Component
 public class CryptoWebSocketClient extends WebSocketClient {
-    public CryptoWebSocketClient(@Value("${upbit.websocket.uri}") String uri) {
-        super(URI.create(uri));
+    public CryptoWebSocketClient(String uri, Map<String, String> headers) {
+        super(URI.create(uri), headers);
     }
 
     @Override

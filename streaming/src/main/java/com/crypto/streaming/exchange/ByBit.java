@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UPBit implements Exchange {
+public class ByBit implements Exchange {
     private final WebSocketClient webSocketClient;
 
-    public UPBit(@Qualifier("upBitWebSocketClient") WebSocketClient webSocketClient) {
+    public ByBit(@Qualifier("byBitWebSocketClient") WebSocketClient webSocketClient) {
         this.webSocketClient = webSocketClient;
     }
 
@@ -21,7 +21,7 @@ public class UPBit implements Exchange {
             Thread.sleep(100);
         }
 
-        String ticketData = "[{\"ticket\":\"NaD9uy7XrLRXKz1gA1wVxyGbNV4YbPUaCOdSATKA\"},{\"type\":\"ty\",\"codes\":[\"KRW-BTC\"]},{\"format\":\"DEFAULT\"}]";
-        webSocketClient.send(ticketData);
+        webSocketClient.send("{\"op\": \"subscribe\", \"args\": [\"orderbook.1.BTCUSDT\",\"publicTrade.BTCUSDT\",\"orderbook.1.ETHUSDT\"]}");
+        webSocketClient.send("{\"op\": \"subscribe\", \"args\": [\"orderbook.1.BTCUSDT\",\"publicTrade.BTCUSDT\",\"orderbook.1.ETHUSDT\"]}");
     }
 }
