@@ -1,5 +1,6 @@
 package com.crypto.streaming.exchange;
 
+import com.crypto.streaming.abstracts.Exchange;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
@@ -13,7 +14,7 @@ import java.util.concurrent.CountDownLatch;
 
 @Component
 @PropertySource("classpath:api.properties")
-public class ByBit extends WebSocketClient {
+public class ByBit extends WebSocketClient implements Exchange {
     private final CountDownLatch latch = new CountDownLatch(1);
 
     public ByBit(@Value("${bybit.websocket.testuri}") String uri, Map<String, String> headers) {
