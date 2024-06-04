@@ -1,27 +1,49 @@
 package com.crypto.streaming.exchange;
 
-import com.crypto.streaming.abstracts.Exchange;
 import org.java_websocket.client.WebSocketClient;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.java_websocket.handshake.ServerHandshake;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-@Component
-public class ByBit implements Exchange {
-    private final WebSocketClient webSocketClient;
+import java.net.URI;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
-    public ByBit(@Qualifier("byBitWebSocketClient") WebSocketClient webSocketClient) {
-        this.webSocketClient = webSocketClient;
+@Component
+@PropertySource("classpath:api.properties")
+public class ByBit extends WebSocketClient {
+    private CountDownLatch latch = new CountDownLatch(1);
+
+    public ByBit(@Value("${bybit.websocket.testuri}") String uri, Map<String, String> headers) {
+        super(URI.create(uri), headers);
     }
 
     @Override
+    public void onOpen(ServerHandshake serverHandshake) {
+        System.out.println("open" + serverHandshake);
+        latch.countDown();
+    }
+
+    @Override
+    public void onMessage(String s) {
+        System.out.println(s);
+    }
+
+    @Override
+    public void onClose(int i, String s, boolean b) {
+        System.out.println("on close");
+    }
+
+    @Override
+    public void onError(Exception e) {
+        System.out.println("on error: " + e);
+    }
+
     public void start() throws InterruptedException {
-        webSocketClient.connect();
+        super.connect();
+        latch.await();
 
-        while (!webSocketClient.isOpen()) {
-            Thread.sleep(100);
-        }
-
-        webSocketClient.send("{\"op\": \"subscribe\", \"args\": [\"orderbook.1.BTCUSDT\",\"publicTrade.BTCUSDT\",\"orderbook.1.ETHUSDT\"]}");
-        webSocketClient.send("{\"op\": \"subscribe\", \"args\": [\"orderbook.1.BTCUSDT\",\"publicTrade.BTCUSDT\",\"orderbook.1.ETHUSDT\"]}");
+        super.send("{\"op\": \"subscribe\", \"args\": [\"orderbook.1.BTCUSDT\",\"publicTrade.BTCUSDT\",\"orderbook.1.ETHUSDT\"]}");
     }
 }
