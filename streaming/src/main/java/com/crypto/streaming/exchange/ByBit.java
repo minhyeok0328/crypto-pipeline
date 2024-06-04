@@ -2,6 +2,7 @@ package com.crypto.streaming.exchange;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import java.util.concurrent.CountDownLatch;
 @Component
 @PropertySource("classpath:api.properties")
 public class ByBit extends WebSocketClient {
-    private CountDownLatch latch = new CountDownLatch(1);
+    private final CountDownLatch latch = new CountDownLatch(1);
 
     public ByBit(@Value("${bybit.websocket.testuri}") String uri, Map<String, String> headers) {
         super(URI.create(uri), headers);
@@ -21,7 +22,6 @@ public class ByBit extends WebSocketClient {
 
     @Override
     public void onOpen(ServerHandshake serverHandshake) {
-        System.out.println("open" + serverHandshake);
         latch.countDown();
     }
 
@@ -44,6 +44,15 @@ public class ByBit extends WebSocketClient {
         super.connect();
         latch.await();
 
-        super.send("{\"op\": \"subscribe\", \"args\": [\"orderbook.1.BTCUSDT\",\"publicTrade.BTCUSDT\",\"orderbook.1.ETHUSDT\"]}");
+        JSONObject params = new JSONObject();
+
+        params.put("op", "subscribe");
+        params.put("args", new String[]{
+                "orderbook.1.BTCUSDT",
+                "publicTrade.BTCUSDT",
+                "orderbook.1.ETHUSDT"
+        });
+
+        super.send(params.toString());
     }
 }
