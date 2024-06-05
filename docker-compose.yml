@@ -8,6 +8,8 @@ services:
   kafka:
     build: ./streaming
     container_name: streaming
+    networks:
+      - crypto
     ports:
       - '9092:9092'
     volumes:
