@@ -1,7 +1,7 @@
 package com.crypto.streaming.exchange;
 
 import com.crypto.streaming.abstracts.Exchange;
-import com.crypto.streaming.kafka.KafkaProducer;
+import com.crypto.streaming.kafka.KafkaProducerService;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
@@ -20,7 +20,7 @@ public class ByBit extends WebSocketClient implements Exchange {
     private final CountDownLatch latch = new CountDownLatch(1);
 
     @Autowired
-    private KafkaProducer kafkaProducer;
+    private KafkaProducerService kafkaProducerService;
 
     public ByBit(@Value("${bybit.websocket.testuri}") String uri, Map<String, String> headers) {
         super(URI.create(uri), headers);
@@ -34,7 +34,7 @@ public class ByBit extends WebSocketClient implements Exchange {
     @Override
     public void onMessage(String s) {
         String TOPIC = "ByBit";
-        kafkaProducer.sendMessage(TOPIC, s);
+        kafkaProducerService.sendMessage(TOPIC, s);
     }
 
     @Override
