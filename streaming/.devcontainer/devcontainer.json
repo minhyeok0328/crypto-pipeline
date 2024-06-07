@@ -1,7 +1,7 @@
 {
   "name": "Crypto Pipeline Streaming",
   "dockerComposeFile": ["../docker-compose.yml"],
-  "service": "alpine",
+  "service": "stream",
   "workspaceFolder": "/usr/src/crypto-pipeline/streaming",
   "extensions": [
     "redhat.java",
@@ -15,7 +15,7 @@
     "java.home": "/usr/lib/jvm/java-17-openjdk"
   },
   "postCreateCommand": "java -version",
-  "runServices": ["alpine"],
+  "runServices": ["stream"],
   "shutdownAction": "none",
   "remoteUser": "root",
   "mounts": [
