@@ -22,7 +22,7 @@ public class ByBit extends WebSocketClient implements Exchange {
     @Autowired
     private KafkaProducerService kafkaProducerService;
 
-    public ByBit(@Value("${bybit.websocket.testuri}") String uri, Map<String, String> headers) {
+    public ByBit(@Value("${bybit.websocket.uri}") String uri, Map<String, String> headers) {
         super(URI.create(uri), headers);
     }
 
