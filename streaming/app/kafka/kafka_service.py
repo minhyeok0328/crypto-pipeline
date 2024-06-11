@@ -15,5 +15,5 @@ class KafkaService:
         )
 
     def send_message(self, message: object) -> None:
-        self.producer.send(self.topic, value=message)
+        self.producer.send(topic=self.topic, value=message)
         self.producer.flush()

@@ -7,15 +7,14 @@ async def main() -> None:
     container = AppContainer()
     container.wire(modules=[__name__])
 
-    bybit = container.exchange_module.bybit
-    
-    async def run_bybit():
-        bybit()
-    
+    bybit = container.exchange_module.bybit()
+
+    async def run_crypto():
+        await bybit.run()
+
     await asyncio.gather(
-        run_bybit() # 임시
+        run_crypto() # 임시
     )
-    print('Exchanges are running')
 
 if __name__ == "__main__":
     asyncio.run(main())
