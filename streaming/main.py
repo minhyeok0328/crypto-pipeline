@@ -9,8 +9,11 @@ async def main() -> None:
 
     bybit = container.exchange_module.bybit
     
+    async def run_bybit():
+        bybit()
+    
     await asyncio.gather(
-        bybit() # 임시
+        run_bybit() # 임시
     )
     print('Exchanges are running')
 

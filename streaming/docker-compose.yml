@@ -1,21 +1,18 @@
-version: '3'
-
-networks:
-  crypto:
-    driver: bridge
+version: '3.8'
 
 services:
   stream:
-    image: crypto-stream:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: streaming
+    container_name: stream
     stdin_open: true
     tty: true
-    networks:
-      - crypto
-    ports:
-      - '9092:9092'
     volumes:
-      - ./:/root/crypto-pipeline/streaming
+      - ./:/root/crypto-pipeline
+    networks:
+      - kafka-net
+
+networks:
+  kafka-net:
+    external: true
