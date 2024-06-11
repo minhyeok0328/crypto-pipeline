@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/openjdk/jdk:17-ubuntu
+FROM python:3.11.9
 
 WORKDIR /usr/src/crypto-pipeline/streaming
 
@@ -6,6 +6,4 @@ WORKDIR /usr/src/crypto-pipeline/streaming
 # libxext6 libxrender1 libxtst6 libxi6 libfreetype6 < 요거
 
 RUN apt-get update && apt-get install -y libxext6 libxrender1 libxtst6 libxi6 libfreetype6 curl git
-
-RUN java -version
-
+RUN pip install kafka-python websockets six dependency_injector
