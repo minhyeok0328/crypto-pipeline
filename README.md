@@ -24,8 +24,7 @@
 
 ## Streaming
 **Websocket**: Websocket으로 실시간으로 데이터를 받아 올 목적으로 사용한다.
-**Java + Spring boot**: 스프링에서 제공하는 각종 Annotation이나 DI, Websocket 등을 사용하기 좋고 간단하게 웹으로 관리해야 하기 때문에 Spring boot를 선택했다.
-> 다만 굳이 Java + spring으로 하는 이유는 Java랑 좀 더 친해지려는 이유가 크다. 자바로 먼저 하고 파이썬으로도 다시 해볼 예정
+**Kafka**: Websocket으로 받은 데이터를 Kafka Producer를 사용하여 preprocessing 앱으로 데이터를 스트리밍 한다
 
 **Apache Kafka**: 실시간으로 데이터를 스트리밍 해야 하기 때문에 선택했다. 데이터 처리하는 App과 Streaming하는 App이 분리되어 있기에 Streaming > preprocessing 쪽으로 데이터 보내줄 목적으로 사용한다.
 
