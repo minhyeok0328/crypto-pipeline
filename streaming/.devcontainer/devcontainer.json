@@ -3,18 +3,6 @@
   "dockerComposeFile": ["../docker-compose.yml"],
   "service": "stream",
   "workspaceFolder": "/usr/src/crypto-pipeline/streaming",
-  "extensions": [
-    "redhat.java",
-    "vscjava.vscode-java-pack",
-    "vscjava.vscode-java-debug",
-    "vscjava.vscode-maven",
-    "vscjava.vscode-java-dependency",
-    "vscjava.vscode-java-test"
-  ],
-  "settings": {
-    "java.home": "/usr/lib/jvm/java-17-openjdk"
-  },
-  "postCreateCommand": "java -version",
   "runServices": ["stream"],
   "shutdownAction": "none",
   "remoteUser": "root",
