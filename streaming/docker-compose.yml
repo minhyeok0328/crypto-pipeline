@@ -10,9 +10,3 @@ services:
     tty: true
     volumes:
       - ./:/root/crypto-pipeline
-    networks:
-      - kafka-net
-
-networks:
-  kafka-net:
-    external: true
