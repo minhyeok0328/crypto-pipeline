@@ -13,8 +13,6 @@ class Exchange(ABC):
             requests_per_minute_limit: Union[int, float] = 0
         ) -> None:
         """
-            거래소 추상화 클래스.
-
             kafka_service_factory (KafkaService): kafka producer 사용 목적.
             websocket_service_factory (WebSocketService): websocket 사용 목적
             subscription_data (Union[dict, list]): 구독 데이터.
@@ -28,6 +26,8 @@ class Exchange(ABC):
         self.subscription_data = subscription_data
         self._is_connected = True
         self.requests_per_minute_limit = 60 / requests_per_minute_limit
+        
+        print(f'kafka topic: {topic}, subscription_data: {subscription_data}, requests_per_minute_limit: {self.requests_per_minute_limit}')
 
     @property
     def is_connected(self) -> bool:
@@ -47,10 +47,11 @@ class Exchange(ABC):
             exchange_message: object = await self.websocket_service.receive_message()
 
             print(f'{self.topic}|message: {exchange_message}')
-            self.kafka_service.send_message(message=exchange_message)
+            await self.kafka_service.send_message(message=exchange_message)
 
             # websocket 분당 요청제한 있어서 추가
-            await asyncio.sleep(self.requests_per_minute_limit)
+            if self.requests_per_minute_limit:
+                await asyncio.sleep(self.requests_per_minute_limit)
 
     def disconnect(self):
         self.is_connected = False
