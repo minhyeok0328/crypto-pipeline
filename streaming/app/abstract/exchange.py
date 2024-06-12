@@ -1,16 +1,22 @@
-from abc import ABC
 import asyncio
+
+from dependency_injector import providers
+from abc import ABC
 from typing import Union
+
+from app.kafka.kafka_service import KafkaService
+from app.websocket.websocket_service import WebSocketService
 
 class Exchange(ABC):
     def __init__(
             self,
-            kafka_service_factory,
-            websocket_service_factory,
+            kafka_service_factory: providers.Provider[KafkaService],
+            websocket_service_factory: providers.Provider[WebSocketService],
             subscription_data: Union[dict, list],
             topic: str,
             exchange_uri: str,
-            requests_per_minute_limit: Union[int, float] = 0
+            requests_per_minute_limit: Union[int, float] = 0,
+            headers: dict = {}
         ) -> None:
         """
             kafka_service_factory (KafkaService): kafka producer 사용 목적.
@@ -19,10 +25,14 @@ class Exchange(ABC):
             topic (str): kafka 데이터 보낼 topic 이름.
             exchange_uri (str): 거래소 uri.
             requests_per_minute_limit (int): 분당 요청제한 값. 기본값은 0
+            headers (dict): websocket 헤더 설정
         """
         self.topic = topic
         self.kafka_service = kafka_service_factory(topic)
-        self.websocket_service = websocket_service_factory(exchange_uri)
+        self.websocket_service = websocket_service_factory(
+            uri=exchange_uri,
+            headers=headers
+        )
         self.subscription_data = subscription_data
         self._is_connected = True
         self.requests_per_minute_limit = 60 / requests_per_minute_limit

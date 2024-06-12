@@ -5,12 +5,16 @@ class WebSocketService:
     uri: str
     ws: WebSocketClientProtocol
 
-    def __init__(self, uri: str) -> None:
+    def __init__(self, uri: str, headers: dict = {}) -> None:
         self.uri = uri
+        self.headers = headers
 
     async def connect(self) -> None:
-        self.ws = await connect(self.uri)
-    
+        self.ws = await connect(
+            uri=self.uri,
+            extra_headers=self.headers
+        )
+
     async def subscription(self, subscription_data: object) -> None:
         await self.ws.send(json.dumps(subscription_data))
 

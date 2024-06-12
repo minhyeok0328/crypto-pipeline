@@ -4,8 +4,8 @@ from app.websocket import WebSocketModule
 from app.exchange import ExchangeModule
 
 class AppContainer(containers.DeclarativeContainer):
-    kafka_module = providers.Container(KafkaModule)
-    websocket_module = providers.Container(WebSocketModule)
+    kafka_module: providers.Container[KafkaModule] = providers.Container(KafkaModule)
+    websocket_module: providers.Container[WebSocketModule] = providers.Container(WebSocketModule)
     exchange_module = providers.Container(
         ExchangeModule,
         kafka_service_factory=kafka_module.provided.kafka_service_factory,

@@ -6,6 +6,6 @@ WORKDIR /usr/src/crypto-pipeline/streaming
 # libxext6 libxrender1 libxtst6 libxi6 libfreetype6 < 요거
 
 RUN apt-get update && apt-get install -y curl git
-RUN pip install kafka-python websockets six dependency_injector python-dotenv
+RUN pip install kafka-python websockets six dependency_injector python-dotenv pyjwt
 
 # CMD [ "python", "main.py" ]
