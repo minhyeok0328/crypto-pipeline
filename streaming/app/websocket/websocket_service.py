@@ -21,11 +21,7 @@ class WebSocketService:
         if continuous:
             while True:
                 message: object = await self.ws.recv()
-                print(f'continuous|receive_message: {message}')
-
                 return message
         else:
             message: object = await self.ws.recv()
-            print(f'receive_message: {message}')
-
             return message

@@ -5,6 +5,7 @@ class ByBitExchange(Exchange):
     def __init__(self, kafka_service_factory, websocket_service_factory) -> None:
         super().__init__(
             topic='bybit',
+            requests_per_minute_limit=100,
             exchange_uri=EXCHANGE_URI['BYBIT_TEST_URI'],
             kafka_service_factory=kafka_service_factory,
             websocket_service_factory=websocket_service_factory,
