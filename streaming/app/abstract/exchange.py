@@ -16,7 +16,7 @@ class Exchange(ABC):
             topic: str,
             exchange_uri: str,
             requests_per_minute_limit: Union[int, float] = 0,
-            headers: dict = {}
+            headers: dict[str, str] = {}
         ) -> None:
         """
             kafka_service_factory (KafkaService): kafka producer 사용 목적.

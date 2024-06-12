@@ -5,7 +5,7 @@ class WebSocketService:
     uri: str
     ws: WebSocketClientProtocol
 
-    def __init__(self, uri: str, headers: dict = {}) -> None:
+    def __init__(self, uri: str, headers: dict[str, str] = {}) -> None:
         self.uri = uri
         self.headers = headers
 
