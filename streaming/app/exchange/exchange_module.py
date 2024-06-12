@@ -1,5 +1,5 @@
 from dependency_injector import containers, providers
-from app.exchange import ByBitExchange
+from app.exchange import ByBitExchange, UpBitExchange
 
 class ExchangeModule(containers.DeclarativeContainer):
     kafka_service_factory = providers.Dependency()
@@ -7,6 +7,12 @@ class ExchangeModule(containers.DeclarativeContainer):
 
     bybit = providers.Singleton(
         ByBitExchange,
+        kafka_service_factory=kafka_service_factory,
+        websocket_service_factory=websocket_service_factory
+    )
+
+    upbit = providers.Singleton(
+        UpBitExchange,
         kafka_service_factory=kafka_service_factory,
         websocket_service_factory=websocket_service_factory
     )

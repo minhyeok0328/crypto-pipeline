@@ -9,13 +9,15 @@ async def main() -> None:
 
     exchange_module: ExchangeModule = container.exchange_module()
     bybit = exchange_module.bybit()
+    upbit = exchange_module.upbit()
 
     async def run_crypto():
-        await bybit.run()
+        await asyncio.gather(
+            bybit.run(),
+            upbit.run()
+        )
 
-    await asyncio.gather(
-        run_crypto()
-    )
+    await run_crypto()
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -14,6 +14,6 @@ class KafkaService:
             value_serializer=lambda v: json.dumps(v).encode('utf-8')
         )
 
-    def send_message(self, message: object) -> None:
-        self.producer.send(topic=self.topic, value=message)
+    async def send_message(self, message: object) -> None:
+        await self.producer.send(topic=self.topic, value=message)
         self.producer.flush()

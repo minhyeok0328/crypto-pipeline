@@ -1,7 +1,8 @@
 from abc import ABC
+from typing import Union
 
 class Exchange(ABC):
-    def __init__(self, kafka_service_factory, websocket_service_factory, subscription_data: dict, topic: str, exchange_uri: str) -> None:
+    def __init__(self, kafka_service_factory, websocket_service_factory, subscription_data: Union[dict, list], topic: str, exchange_uri: str) -> None:
         self.kafka_service = kafka_service_factory(topic)
         self.websocket_service = websocket_service_factory(exchange_uri)
         self.subscription_data = subscription_data
@@ -21,8 +22,8 @@ class Exchange(ABC):
             subscription_data=self.subscription_data
         )
 
-        while self.is_connected:
-            bybit_message: object = await self.websocket_service.receive_message(continuous=True)
+        while self.is_connected is True:
+            bybit_message: object = await self.websocket_service.receive_message()
             self.kafka_service.send_message(message=bybit_message)
 
     def disconnect(self):
