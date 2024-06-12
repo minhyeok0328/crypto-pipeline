@@ -18,4 +18,7 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
     volumes:
-      - /var/lib/kafka
+      - kafka_volume:/var/lib/kafka
+
+volumes:
+  kafka_volume:
