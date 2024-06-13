@@ -2,7 +2,7 @@
   "name": "Crypto Pipeline Streaming",
   "dockerComposeFile": ["../docker-compose.yml"],
   "service": "stream",
-  "workspaceFolder": "/usr/src/crypto-pipeline/streaming",
+  "workspaceFolder": "/root/crypto-pipeline/streaming",
   "runServices": ["stream"],
   "shutdownAction": "none",
   "remoteUser": "root",
