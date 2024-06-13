@@ -1,2 +1,2 @@
-from .websocket_module import WebSocketModule
+from .websocket_container import WebSocketContainer
 from .websocket_service import WebSocketService

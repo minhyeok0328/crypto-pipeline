@@ -4,7 +4,7 @@ from app.kafka.kafka_service import KafkaService
 from app.websocket.websocket_service import WebSocketService
 
 
-class ExchangeModule(containers.DeclarativeContainer):
+class ExchangeContainer(containers.DeclarativeContainer):
     kafka_service_factory: providers.Dependency[KafkaService] = providers.Dependency()
     websocket_service_factory: providers.Dependency[WebSocketService] = providers.Dependency()
 

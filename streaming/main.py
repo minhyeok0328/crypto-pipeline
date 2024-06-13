@@ -1,14 +1,14 @@
 import asyncio
 
 from app import AppContainer
-from app.exchange.exchange_module import ExchangeModule
+from app.exchange.exchange_container import ExchangeContainer
 
 
 async def main() -> None:
     container = AppContainer()
     container.wire(modules=[__name__])
 
-    exchange_module: ExchangeModule = container.exchange_module()
+    exchange_module: ExchangeContainer = container.exchange_module()
     bybit = exchange_module.bybit()
     upbit = exchange_module.upbit()
 
