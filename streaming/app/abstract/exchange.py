@@ -1,43 +1,40 @@
 import asyncio
 
 from dependency_injector import providers
-from abc import ABC
-from typing import Union
+from abc import ABC, abstractmethod
 
 from app.kafka.kafka_service import KafkaService
 from app.websocket.websocket_service import WebSocketService
+from app.builder import ExchangeConfig
+
 
 class Exchange(ABC):
     def __init__(
             self,
             kafka_service_factory: providers.Provider[KafkaService],
             websocket_service_factory: providers.Provider[WebSocketService],
-            subscription_data: Union[dict, list],
-            topic: str,
-            exchange_uri: str,
-            requests_per_minute_limit: Union[int, float] = 0,
-            headers: dict[str, str] = {}
-        ) -> None:
+            config: ExchangeConfig
+    ) -> None:
         """
             kafka_service_factory (KafkaService): kafka producer 사용 목적.
             websocket_service_factory (WebSocketService): websocket 사용 목적
-            subscription_data (Union[dict, list]): 구독 데이터.
-            topic (str): kafka 데이터 보낼 topic 이름.
-            exchange_uri (str): 거래소 uri.
-            requests_per_minute_limit (int): 분당 요청제한 값. 기본값은 0
-            headers (dict): websocket 헤더 설정
+            config (ExchangeConfig): 거래소 설정 builder
         """
-        self.topic = topic
-        self.kafka_service = kafka_service_factory(topic)
+        self.topic = config.topic
+        self.kafka_service = kafka_service_factory(config.topic)
         self.websocket_service = websocket_service_factory(
-            uri=exchange_uri,
-            headers=headers
+            uri=config.exchange_uri,
+            headers=config.headers
         )
-        self.subscription_data = subscription_data
+        self.subscription_data = config.subscription_data
         self._is_connected = True
-        self.requests_per_minute_limit = 60 / requests_per_minute_limit
+        self.requests_per_minute_limit = 60 / config.requests_per_minute_limit
 
-        print(f'kafka topic: {topic}, subscription_data: {subscription_data}, requests_per_minute_limit: {self.requests_per_minute_limit}')
+        print(f'kafka topic: {self.topic}, subscription_data: {self.subscription_data}, requests_per_minute_limit: {self.requests_per_minute_limit}')
+
+    @abstractmethod
+    def set_config(self) -> ExchangeConfig:
+        pass
 
     @property
     def is_connected(self) -> bool:
@@ -59,7 +56,7 @@ class Exchange(ABC):
             print(f'{self.topic}|message: {exchange_message}')
             await self.kafka_service.send_message(message=exchange_message)
 
-            # websocket 분당 요청제한 있어서 추가
+            # websocket 분당 요청 제한 있어서 추가
             if self.requests_per_minute_limit:
                 await asyncio.sleep(self.requests_per_minute_limit)
 

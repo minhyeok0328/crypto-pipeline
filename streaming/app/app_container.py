@@ -3,6 +3,7 @@ from app.kafka import KafkaModule
 from app.websocket import WebSocketModule
 from app.exchange import ExchangeModule
 
+
 class AppContainer(containers.DeclarativeContainer):
     kafka_module: providers.Container[KafkaModule] = providers.Container(KafkaModule)
     websocket_module: providers.Container[WebSocketModule] = providers.Container(WebSocketModule)

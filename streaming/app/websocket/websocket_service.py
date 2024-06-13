@@ -1,6 +1,7 @@
 import json
 from websockets import connect, WebSocketClientProtocol
 
+
 class WebSocketService:
     uri: str
     ws: WebSocketClientProtocol

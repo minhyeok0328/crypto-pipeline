@@ -13,6 +13,6 @@ EXCHANGE_URI: dict[str, str] = {
 EXCHANGE_KEY: dict[str, str] = {
     'UPBIT_ACCESS_KEY': os.getenv('UPBIT_ACCESS_KEY') or '',
     'UPBIT_SECRET_KEY': os.getenv('UPBIT_SECRET_KEY') or '',
-    'BYBIT_SECRET_KEY': os.getenv('BYBIT_SECRET_KEY') or '',
+    'BYBIT_ACCESS_KEY': os.getenv('BYBIT_ACCESS_KEY') or '',
     'BYBIT_SECRET_KEY': os.getenv('BYBIT_SECRET_KEY') or '',
 }
