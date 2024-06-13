@@ -34,4 +34,5 @@ class ByBitExchange(Exchange):
                     'orderbook.1.ETHUSDT'
                 ]
             })
+            .build()
         )
