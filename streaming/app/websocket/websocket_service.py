@@ -1,11 +1,16 @@
 import json
+
 from websockets import connect, WebSocketClientProtocol
+
 
 class WebSocketService:
     uri: str
     ws: WebSocketClientProtocol
 
-    def __init__(self, uri: str, headers: dict[str, str] = {}) -> None:
+    def __init__(self, uri: str, headers=None) -> None:
+        if headers is None:
+            headers = {}
+
         self.uri = uri
         self.headers = headers
 

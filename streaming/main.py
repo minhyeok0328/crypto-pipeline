@@ -3,6 +3,7 @@ import asyncio
 from app import AppContainer
 from app.exchange.exchange_module import ExchangeModule
 
+
 async def main() -> None:
     container = AppContainer()
     container.wire(modules=[__name__])
@@ -18,6 +19,7 @@ async def main() -> None:
         )
 
     await run_crypto()
+
 
 if __name__ == "__main__":
     asyncio.run(main())

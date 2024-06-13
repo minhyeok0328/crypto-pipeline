@@ -3,9 +3,10 @@ from app.exchange import ByBitExchange, UpBitExchange
 from app.kafka.kafka_service import KafkaService
 from app.websocket.websocket_service import WebSocketService
 
+
 class ExchangeModule(containers.DeclarativeContainer):
-    kafka_service_factory = providers.Dependency(KafkaService)
-    websocket_service_factory = providers.Dependency(WebSocketService)
+    kafka_service_factory: providers.Dependency[KafkaService] = providers.Dependency()
+    websocket_service_factory: providers.Dependency[WebSocketService] = providers.Dependency()
 
     bybit = providers.Singleton(
         ByBitExchange,

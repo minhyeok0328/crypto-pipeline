@@ -1,8 +1,8 @@
 import json
-from socket import timeout
 
 from kafka import KafkaProducer
 from app.config.kafka_config import KAFKA_CONFIG
+
 
 class KafkaService:
     topic: str
