@@ -10,9 +10,10 @@ class KafkaService:
 
     def __init__(self, topic: str) -> None:
         self.topic = topic
-        self.producer = KafkaProducer(
+        self.producer: KafkaProducer = KafkaProducer(
             **KAFKA_CONFIG,
-            value_serializer=lambda v: v if isinstance(v, bytes) else json.dumps(v).encode('utf-8')
+            value_serializer=lambda v: v if isinstance(v, bytes) else json.dumps(v).encode('utf-8'),
+            acks='all'
         )
 
     async def send_message(self, message: object) -> None:
