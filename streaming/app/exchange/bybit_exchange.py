@@ -12,7 +12,6 @@ class ByBitExchange(Exchange):
             kafka_service_factory: providers.Dependency[KafkaService],
             websocket_service_factory: providers.Dependency[WebSocketService]
     ) -> None:
-        config = self.set_config()
         super().__init__(
             kafka_service_factory=kafka_service_factory,
             websocket_service_factory=websocket_service_factory

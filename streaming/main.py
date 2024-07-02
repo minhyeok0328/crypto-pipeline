@@ -11,9 +11,11 @@ async def main() -> None:
     exchange_container: ExchangeContainer = container.exchange_container()
     bybit = exchange_container.bybit()
     upbit = exchange_container.upbit()
+    binance = exchange_container.binance()
 
     async def run_crypto():
         await asyncio.gather(
+            binance.run(),
             bybit.run(),
             upbit.run()
         )

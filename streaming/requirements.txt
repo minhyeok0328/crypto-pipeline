@@ -1,5 +1,8 @@
+cffi==1.16.0
+cryptography==42.0.8
 dependency-injector==4.41.0
 kafka-python==2.0.2
+pycparser==2.22
 PyJWT==2.8.0
 python-dotenv==1.0.1
 six==1.16.0

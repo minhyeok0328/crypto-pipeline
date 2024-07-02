@@ -1,5 +1,5 @@
 from dependency_injector import containers, providers
-from app.exchange import ByBitExchange, UpBitExchange
+from app.exchange import ByBitExchange, UpBitExchange, BinanceExchange
 from app.kafka.kafka_service import KafkaService
 from app.websocket.websocket_service import WebSocketService
 
@@ -16,6 +16,12 @@ class ExchangeContainer(containers.DeclarativeContainer):
 
     upbit = providers.Singleton(
         UpBitExchange,
+        kafka_service_factory=kafka_service_factory,
+        websocket_service_factory=websocket_service_factory
+    )
+
+    binance = providers.Singleton(
+        BinanceExchange,
         kafka_service_factory=kafka_service_factory,
         websocket_service_factory=websocket_service_factory
     )
