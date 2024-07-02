@@ -2,11 +2,8 @@
   "name": "Crypto Pipeline Streaming",
   "dockerComposeFile": ["../docker-compose.yml"],
   "service": "stream",
-  "workspaceFolder": "/usr/src/crypto-pipeline/streaming",
+  "workspaceFolder": "/app",
   "runServices": ["stream"],
   "shutdownAction": "none",
-  "remoteUser": "root",
-  "mounts": [
-    "source=C:\\dev\\crypto-pipeline\\streaming\\.devcontainer,target=/.devcontainer,type=bind,consistency=cached"
-  ]
+  "remoteUser": "root"
 }

@@ -8,9 +8,9 @@ async def main() -> None:
     container = AppContainer()
     container.wire(modules=[__name__])
 
-    exchange_module: ExchangeContainer = container.exchange_module()
-    bybit = exchange_module.bybit()
-    upbit = exchange_module.upbit()
+    exchange_container: ExchangeContainer = container.exchange_container()
+    bybit = exchange_container.bybit()
+    upbit = exchange_container.upbit()
 
     async def run_crypto():
         await asyncio.gather(
