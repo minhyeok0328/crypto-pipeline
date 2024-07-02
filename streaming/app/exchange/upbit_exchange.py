@@ -18,8 +18,7 @@ class UpBitExchange(Exchange):
         config = self.set_config()
         super().__init__(
             kafka_service_factory=kafka_service_factory,
-            websocket_service_factory=websocket_service_factory,
-            config=config
+            websocket_service_factory=websocket_service_factory
         )
 
     def set_config(self) -> ExchangeConfig:

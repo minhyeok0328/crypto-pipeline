@@ -12,14 +12,13 @@ class Exchange(ABC):
     def __init__(
             self,
             kafka_service_factory: providers.Provider[KafkaService],
-            websocket_service_factory: providers.Provider[WebSocketService],
-            config: ExchangeConfig
+            websocket_service_factory: providers.Provider[WebSocketService]
     ) -> None:
         """
             kafka_service_factory (KafkaService): kafka producer 사용 목적.
             websocket_service_factory (WebSocketService): websocket 사용 목적
-            config (ExchangeConfig): 거래소 설정 builder
         """
+        config = self.set_config()
         self.topic = config.topic
         self.kafka_service = kafka_service_factory(config.topic)
         self.websocket_service = websocket_service_factory(
@@ -34,6 +33,9 @@ class Exchange(ABC):
 
     @abstractmethod
     def set_config(self) -> ExchangeConfig:
+        """
+            config (ExchangeConfig): 거래소 설정 builder
+        """
         pass
 
     @property
