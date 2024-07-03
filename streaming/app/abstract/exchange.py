@@ -27,7 +27,10 @@ class Exchange(ABC):
         )
         self.subscription_data = config.subscription_data
         self._is_connected = True
-        self.requests_per_minute_limit = 60 / config.requests_per_minute_limit
+        self.requests_per_minute_limit = 0
+
+        if config.requests_per_minute_limit:
+            self.requests_per_minute_limit = 60 / config.requests_per_minute_limit
 
         print(f'kafka topic: {self.topic}, subscription_data: {self.subscription_data}, requests_per_minute_limit: {self.requests_per_minute_limit}')
 
