@@ -1,0 +1,9 @@
+{
+  "name": "Crypto Pipeline Preprocessing",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "preprocessing",
+  "workspaceFolder": "/app",
+  "runServices": ["preprocessing"],
+  "shutdownAction": "none",
+  "remoteUser": "root"
+}

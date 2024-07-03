@@ -1,3 +1,3 @@
-FROM bitnami/kafka:3.7.0-debian-12-r6
+FROM openjdk:17
 
-WORKDIR /usr/src/crypto-pipeline/preprocessing
+WORKDIR /app
