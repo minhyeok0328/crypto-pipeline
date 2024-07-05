@@ -30,6 +30,7 @@ dependencies {
     compileOnly "org.apache.flink:flink-streaming-java:${flink_version}"
     compileOnly "org.apache.flink:flink-core:${flink_version}"
     implementation "org.apache.flink:flink-clients:${flink_version}"
+    implementation "org.apache.flink:flink-connector-base:${flink_version}"
     compileOnly "org.apache.flink:flink-table-common:${flink_version}"
     implementation group: 'org.apache.flink', name: 'flink-connector-kafka', version: '3.2.0-1.19'
 
