@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  preprocessing:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: preprocessing
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/app

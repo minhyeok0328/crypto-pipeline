@@ -9,6 +9,10 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    flink_version = '1.19.1'
+}
+
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
@@ -23,7 +27,14 @@ dependencies {
     implementation group: 'org.apache.kafka', name: 'kafka_2.13', version: '3.7.0'
 
     // flink
-    compileOnly group: 'org.apache.flink', name: 'flink-streaming-java', version: '1.19.0'
+    compileOnly "org.apache.flink:flink-streaming-java:${flink_version}"
+    compileOnly "org.apache.flink:flink-core:${flink_version}"
+    implementation "org.apache.flink:flink-clients:${flink_version}"
+    compileOnly "org.apache.flink:flink-table-common:${flink_version}"
+    implementation group: 'org.apache.flink', name: 'flink-connector-kafka', version: '3.2.0-1.19'
+
+
+
 }
 
 test {
