@@ -7,7 +7,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import java.util.Properties;
 
 public class KafkaConfiguration {
-    private static final String BOOTSTRAP_SERVER = "192.168.0.5:9092";
+    private static final String BOOTSTRAP_SERVER = "192.168.0.9:9092";
     private static final Boolean AUTO_COMMIT = false;
 
     public KafkaSource<String> setKafkaSource(String topic_name, String group_id) {

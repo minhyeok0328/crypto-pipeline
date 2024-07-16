@@ -19,6 +19,5 @@ class KafkaService:
     async def send_message(self, message: object) -> None:
         test = self.producer.send(topic=self.topic, value=message)
         result = test.get(timeout=10)
-        print(f'{self.topic}|send_mssage:{result}')
 
         self.producer.flush()
