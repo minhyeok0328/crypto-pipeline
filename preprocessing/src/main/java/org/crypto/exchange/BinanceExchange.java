@@ -11,6 +11,7 @@ import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.crypto.kafka.KafkaConfiguration;
 import static org.apache.flink.table.api.Expressions.$;
 import static org.apache.flink.table.api.Expressions.concat;
+import org.apache.flink.table.types.AbstractDataType;
 
 import java.util.stream.Stream;
 
@@ -25,7 +26,7 @@ public class BinanceExchange {
         KafkaConfiguration kafkaConfiguration = new KafkaConfiguration();
         KafkaSource<String> kafkaSource = kafkaConfiguration.setKafkaSource(TOPIC_NAME, GROUP_ID);
 
-        DataStream<String> stream = env.fromSource(kafkaSource, WatermarkStrategy.noWatermarks(), "Kakfa Source");
+        DataStream<String> stream = env.fromSource(kafkaSource, WatermarkStrategy.noWatermarks(), "Binance Kafka Source");
 
         Schema schema = Schema.newBuilder()
                 .column("e", DataTypes.STRING())
@@ -46,12 +47,12 @@ public class BinanceExchange {
                 .column("L", DataTypes.INT())
                 .build();
 
-        tableEnv.createTemporaryView("CryptoTable", stream, schema);
+        tableEnv.createTemporaryView("binance_table", stream, schema);
 
-        Table resultTable = tableEnv.sqlQuery("""
+        tableEnv.executeSql("""
                     SELECT
                         e as event_type,
-                        E as event_time,
+                        TO_TIMESTAMP_LTZ(E, 3) as event_time,
                         s as symbol,
                         p as price_change,
                         P as price_change_percent,
@@ -62,13 +63,15 @@ public class BinanceExchange {
                         w as weighted_average_price,
                         v as total_traded_base_asset_volume,
                         q as total_traded_quote_assets_volume,
-                        O as statistics_open_time,
-                        C as statistics_close_time,
+                        TO_TIMESTAMP_LTZ(O, 3) as statistics_open_time,
+                        TO_TIMESTAMP_LTZ(C, 3) as statistics_close_time,
                         F as first_trade_id,
                         L as last_trade_id,
                         n as total_number_of_trades
-                    FROM KafkaTable
-                """);
+                    FROM binance_table
+                """).print();
+
+
 
         env.execute("Flink Kafka Consumer Example");
     }
